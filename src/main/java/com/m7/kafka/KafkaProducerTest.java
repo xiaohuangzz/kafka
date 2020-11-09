@@ -42,18 +42,29 @@ public class KafkaProducerTest implements Runnable {
         int messageNo = 1;
         try {
             for(;;) {
-                String messageStr=
-                "@common,N00000003636,10018224," +
-                        UUID.randomUUID().toString()+","+UUID.randomUUID().toString();
+                String messageStr =
+                        "action=NewWebchat&data=" +
+                        "{\"account\":\"N00000002827\",\"sid\":\"55ada3a0-14f8-11eb-85e9-b3537fe351fa\",\"messageId\":\""+"UUID.randomUUID().toString()"+"\"," +
+                        "\"createTime\":\"2020-10-27 10:59:01\",\"msgType\":\"newMsg\",\"accessId\":\"00ed78d0-134b-11eb-b2be-bd81b0bdfb26\",\"content\":" +
+                        "messageNo"+",\"platform\":\"pc\",\"contentType\":\"text\",\"" +
+                        "nickName\":\"mjme1uPnMn\",\"notShow\":\"undefined\",\"showHtml\":false,\"when\":1603767541148,\"ip\":\"111.202.78.82\",\"dealCustomerMsg\":false}";
+//                messageStr = "action=NewWebchat&data=" +messageNo;
+                //                String messageStr=
+//                "@common,N00000003636,10018224," +
+//                        UUID.randomUUID().toString()+","+UUID.randomUUID().toString();
+
+//                Future future = producer.send(new ProducerRecord<String, String>(
+//                        topic, String.valueOf(Clock.systemDefaultZone().millis()), messageStr));
                 Future future = producer.send(new ProducerRecord<String, String>(
-                        topic, String.valueOf(Clock.systemDefaultZone().millis()), messageStr));
-//                System.out.println(future.get());
+                        topic, "55ada3a0-14f8-11eb-85e9-b3537fe351fa", messageStr));
+
+                System.out.println(future.get());
                 //生产10条就打印
                 if(messageNo%10==0){
                     System.out.println("发送的信息:" + messageStr);
                 }
                 //生产100条就退出
-                if(messageNo%1000==0){
+                if(messageNo%2000==0){
                     System.out.println("成功发送了"+messageNo+"条");
                     break;
                 }
@@ -67,7 +78,7 @@ public class KafkaProducerTest implements Runnable {
     }
 
     public static void main(String args[]) {
-        KafkaProducerTest test = new KafkaProducerTest("im_assign_chat_six");
+        KafkaProducerTest test = new KafkaProducerTest("im_gateway2cc_test");
         Thread thread = new Thread(test);
         thread.start();
     }

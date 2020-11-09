@@ -9,8 +9,7 @@ public class Test {
 //        System.out.println(UUID.randomUUID().toString());
 //        System.out.println(Clock.systemDefaultZone().millis());
         System.out.println(
-                "@common,N00000003636,10018224," +
-                        UUID.randomUUID().toString()+","+UUID.randomUUID().toString());
+                String.valueOf(Clock.systemDefaultZone().millis()));
 //        String source = "10018224";
 //        Random r = new Random();
 //        StringBuilder rs = new StringBuilder();
