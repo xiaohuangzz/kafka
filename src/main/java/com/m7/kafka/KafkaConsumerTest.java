@@ -5,6 +5,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.concurrent.ThreadPoolExecutor;
+
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 /**
@@ -68,9 +70,15 @@ import org.apache.kafka.common.serialization.StringDeserializer;
             }
         }
         public static void main(String args[]) {
+            ProduceThreadPool produceThreadPool = new ProduceThreadPool();
+            ThreadPoolExecutor threadPoolExecutor = produceThreadPool.threadPoolExecutor();
             KafkaConsumerTest test1 = new KafkaConsumerTest("im_assign_chat_six");
-            Thread thread1 = new Thread(test1);
-            thread1.start();
+            for (int i = 0;i<10;i++){
+                threadPoolExecutor.submit(test1);
+            }
+
+//            Thread thread1 = new Thread(test1);
+//            thread1.start();
         }
     }
 
